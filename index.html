@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Prompt engineering portfolio: Steppe Hero, a one-click product video preset built in ComfyUI on OpenRouter models, with three iterations, an error inventory and image and video model tests.">
+<meta name="description" content="Prompt engineering portfolio: Steppe Hero, a one-click product video preset built in ComfyUI on OpenRouter models, with three iterations, an error inventory and image and video model tests. English and Russian.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Eldar Azbanbayev · Prompt Engineer portfolio">
 <meta property="og:description" content="Steppe Hero: one phone photo in, a 5-second golden-hour product shot out. Pipeline, error inventory, model tests and the ComfyUI tooling behind it.">
@@ -14,7 +14,7 @@
 <title>Eldar Azbanbayev Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Sofia+Sans+Condensed:wght@500;600;700&display=swap">
 <style>
   /* Dark-first: graded footage. Light: hazy steppe sky. */
   :root {
@@ -64,6 +64,11 @@
     --flag: #ad4a31;
     --shadow: 0 1px 2px rgba(25, 27, 23, 0.06);
   }
+  /* Barlow Condensed and Instrument Sans have no Cyrillic, so the Russian version swaps in faces that do. */
+  :root:lang(ru) {
+    --display: "Sofia Sans Condensed", "Roboto Condensed", "Arial Narrow", sans-serif;
+    --body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
 
   body {
     background: var(--bg);
@@ -71,7 +76,7 @@
     font: 400 16px/1.62 var(--body);
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1140px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 72px; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 72px; }
   a { color: inherit; text-decoration-color: var(--amber); text-underline-offset: 3px; }
   a:hover { color: var(--amber); }
   :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 3px; }
@@ -88,12 +93,21 @@
   }
 
   /* ---------- masthead ---------- */
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px 20px; flex-wrap: wrap; }
+  .lang { display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: 5px; background: var(--panel); }
+  .lang button {
+    font: 500 11.5px/1 var(--mono); letter-spacing: 0.1em;
+    padding: 6px 9px; border: 0; border-radius: 3px;
+    background: transparent; color: var(--muted); cursor: pointer;
+  }
+  .lang button:hover { color: var(--ink); }
+  .lang button[aria-pressed="true"] { background: var(--amber); color: var(--amber-ink); cursor: default; }
   .mast { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end; padding-bottom: 28px; }
   .mast h1 {
     font: 600 clamp(44px, 8.4vw, 88px)/0.92 var(--display);
     letter-spacing: 0.005em;
     text-transform: uppercase;
-    margin-top: 10px;
+    margin-top: 14px;
   }
   .mast .role { margin-top: 14px; font-size: 18px; color: var(--muted); max-width: 44ch; }
   .mast .role b { color: var(--ink); font-weight: 500; }
@@ -145,7 +159,7 @@
   .step { display: grid; gap: 10px; }
   .step img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 3px; background: var(--panel-2); }
   .step img.tall { aspect-ratio: 4 / 3; }
-  .step .n { font: 500 11.5px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); }
+  .step .n { font: 500 11.5px/1.3 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); }
   .step h3 { font: 600 17px/1.3 var(--body); }
   .step p { font-size: 14.5px; color: var(--muted); }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -163,7 +177,7 @@
 
   /* ---------- test set ---------- */
   .inputs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
-  .inputs li { display: grid; gap: 8px; }
+  .inputs li { display: grid; gap: 8px; align-content: start; }
   .inputs img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
   .inputs b { font: 600 14.5px/1.2 var(--body); display: block; }
   .inputs span { font-size: 13.5px; color: var(--muted); }
@@ -279,186 +293,195 @@
 </style>
 </head>
 <body>
+
 <div class="wrap">
 
-  <header class="mast">
-    <div>
-      <div class="eyebrow">Portfolio · Prompt Engineer · Higgsfield</div>
-      <h1>Eldar<br>Azbanbayev</h1>
-      <p class="role"><b>Generative AI engineer.</b> I design presets and pipelines that turn one upload into a finished shot, and I measure where they break.</p>
+  <header>
+    <div class="topbar">
+      <div class="eyebrow" data-i18n="top_eyebrow">Portfolio · Prompt Engineer</div>
+      <div class="lang" role="group" aria-label="Language" data-i18n-aria="lang_group">
+        <button type="button" id="lang-en" data-lang="en" lang="en" title="English" aria-pressed="true">EN</button>
+        <button type="button" id="lang-ru" data-lang="ru" lang="ru" title="Русский" aria-pressed="false">RU</button>
+      </div>
     </div>
-    <div class="contact" aria-label="Contact">
-      <div class="contact-row"><span class="k">Email</span><span class="v" id="c-email">eldar.imsc@gmail.com</span><button class="copy" type="button" data-copy="c-email" id="copy-email">Copy</button></div>
-      <div class="contact-row"><span class="k">Telegram</span><span class="v" id="c-tg">@oiradle</span><button class="copy" type="button" data-copy="c-tg" id="copy-tg">Copy</button></div>
-      <div class="contact-row"><span class="k">Based</span><span class="v">Astana · on-site in Almaty</span></div>
+    <div class="mast">
+      <div>
+        <h1>Eldar<br>Azbanbayev</h1>
+        <p class="role" data-i18n="role"><b>Generative AI engineer.</b> I design presets and pipelines that turn one upload into a finished shot, and I measure where they break.</p>
+      </div>
+      <div class="contact" role="group" aria-label="Contact" data-i18n-aria="contact">
+        <div class="contact-row"><span class="k" data-i18n="k_email">Email</span><span class="v" id="c-email">eldar.imsc@gmail.com</span><button class="copy" type="button" data-copy="c-email" id="copy-email">Copy</button></div>
+        <div class="contact-row"><span class="k">Telegram</span><span class="v" id="c-tg">@oiradle</span><button class="copy" type="button" data-copy="c-tg" id="copy-tg">Copy</button></div>
+        <div class="contact-row"><span class="k" data-i18n="k_based">Based</span><span class="v" data-i18n="v_based">Astana · on-site in Almaty</span></div>
+      </div>
     </div>
   </header>
 
   <section aria-labelledby="reel-title">
-    <div class="eyebrow" id="reel-title">Case · Steppe Hero, a one-click product preset</div>
+    <div class="eyebrow" id="reel-title" data-i18n="case_eyebrow">Case · Steppe Hero, a one-click product preset</div>
     <div class="frame reel" style="margin-top:14px">
-      <video id="v-reel" src="assets/reel.mp4" poster="assets/reel_poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Steppe Hero results for five test products, the user's photo shown in the corner"></video>
+      <video id="v-reel" src="assets/reel.mp4" poster="assets/reel_poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Steppe Hero results for five test products, the user's photo shown in the corner" data-i18n-aria="reel_aria"></video>
     </div>
     <dl class="slate">
-      <div><dt>Input</dt><dd>1 phone photo</dd></div>
-      <div><dt>Output</dt><dd>5 s · 720p · 24 fps</dd></div>
-      <div><dt>Cost</dt><dd class="big">$0.86 / result</dd></div>
-      <div><dt>Time</dt><dd>~3 min</dd></div>
-      <div><dt>Iterations</dt><dd>3 takes · 8 failures</dd></div>
-      <div><dt>Runs on</dt><dd>ComfyUI + OpenRouter</dd></div>
+      <div><dt data-i18n="sl_in">Input</dt><dd data-i18n="sl_in_v">1 phone photo</dd></div>
+      <div><dt data-i18n="sl_out">Output</dt><dd data-i18n="sl_out_v">5 s · 720p · 24 fps</dd></div>
+      <div><dt data-i18n="sl_cost">Cost</dt><dd class="big" data-i18n="sl_cost_v">$0.86 / result</dd></div>
+      <div><dt data-i18n="sl_time">Time</dt><dd data-i18n="sl_time_v">~3 min</dd></div>
+      <div><dt data-i18n="sl_iter">Iterations</dt><dd data-i18n="sl_iter_v">3 takes · 8 failures</dd></div>
+      <div><dt data-i18n="sl_runs">Runs on</dt><dd>ComfyUI + OpenRouter</dd></div>
     </dl>
-    <p class="lede">The user uploads one photo of a product, shot on a phone in a messy room. The preset returns a five-second golden-hour shot of that exact product on a granite boulder in the Kazakh steppe: slow push-in, Stipa grass in the wind, warm backlight.</p>
-    <p class="lede">Shape, colors and label text must survive. Everything else is the preset's job. The reel shows the five test products with each user's photo in the corner.</p>
+    <p class="lede" data-i18n="lede1">The user uploads one photo of a product, shot on a phone in a messy room. The preset returns a five-second golden-hour shot of that exact product on a granite boulder in the Kazakh steppe: slow push-in, Stipa grass in the wind, warm backlight.</p>
+    <p class="lede" data-i18n="lede2">Shape, colors and label text must survive. Everything else is the preset's job. The reel shows the five test products with each user's photo in the corner.</p>
   </section>
 
   <section class="block" aria-labelledby="h-pipe">
     <div class="rail">
-      <div class="eyebrow">How it works</div>
-      <h2 id="h-pipe">Pipeline</h2>
+      <div class="eyebrow" data-i18n="pipe_eyebrow">How it works</div>
+      <h2 id="h-pipe" data-i18n="pipe_h">Pipeline</h2>
     </div>
     <div class="content">
-      <p>Three models chained in a ComfyUI graph. I picked them from OpenRouter's usage ranking (tokens spent by all users in the week to Sept&nbsp;24, 2026), then kept or replaced each one based on the test set.</p>
+      <p data-i18n="pipe_p">Three models chained in a ComfyUI graph. I picked them from OpenRouter's usage ranking (tokens spent by all users in the week to Sept&nbsp;24, 2026), then kept or replaced each one based on the test set.</p>
       <div class="steps">
         <div class="step">
-          <img class="tall" src="assets/pipe_input.jpg" alt="User's phone photo of a porcelain tea bowl on a cluttered table">
-          <div class="n">Step 1 · Read the photo</div>
-          <h3>Prompt enhancer</h3>
-          <div class="chips"><span class="chip">GLM-5.3 Flash</span><span class="chip">#1 text model</span><span class="chip">$0.0005</span></div>
-          <p>Describes the product exactly, quotes only text it can read with certainty, adds a material note for glass, metal or matte surfaces and picks a natural resting position. Then fills the master template.</p>
+          <img class="tall" src="assets/pipe_input.jpg" alt="User's phone photo of a porcelain tea bowl on a cluttered table" data-i18n-alt="s1_alt">
+          <div class="n" data-i18n="s1_n">Step 1 · Read the photo</div>
+          <h3 data-i18n="s1_h">Prompt enhancer</h3>
+          <div class="chips"><span class="chip">GLM-5.3 Flash</span><span class="chip" data-i18n="chip_text1">#1 text model</span><span class="chip">$0.0005</span></div>
+          <p data-i18n="s1_p">Describes the product exactly, quotes only text it can read with certainty, adds a material note for glass, metal or matte surfaces and picks a natural resting position. Then fills the master template.</p>
         </div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="step">
-          <img src="assets/pipe_start.jpg" alt="Start frame: the tea bowl on a granite boulder in the steppe at golden hour">
-          <div class="n">Step 2 · Build the start frame</div>
-          <h3>Product in the scene, 2K</h3>
-          <div class="chips"><span class="chip">Nano Banana 2</span><span class="chip">#2 image model</span><span class="chip">2752×1536</span><span class="chip">$0.10</span></div>
-          <p>Rebuilds the product on the boulder, with the user's photo as the identity reference. No new text, props or garnish.</p>
+          <img src="assets/pipe_start.jpg" alt="Start frame: the tea bowl on a granite boulder in the steppe at golden hour" data-i18n-alt="s2_alt">
+          <div class="n" data-i18n="s2_n">Step 2 · Build the start frame</div>
+          <h3 data-i18n="s2_h">Product in the scene, 2K</h3>
+          <div class="chips"><span class="chip">Nano Banana 2</span><span class="chip" data-i18n="chip_img2">#2 image model</span><span class="chip">2752×1536</span><span class="chip">$0.10</span></div>
+          <p data-i18n="s2_p">Rebuilds the product on the boulder, with the user's photo as the identity reference. No new text, props or garnish.</p>
         </div>
         <div class="arrow" aria-hidden="true">→</div>
         <div class="step">
-          <img src="assets/pipe_final.jpg" alt="Last frame of the video: the tea bowl after the camera push-in">
-          <div class="n">Step 3 · Animate</div>
-          <h3>Push-in, 5 seconds</h3>
-          <div class="chips"><span class="chip">Seedance 2.0</span><span class="chip">first frame</span><span class="chip">720p</span><span class="chip">$0.76</span></div>
-          <p>Slow push-in, grass in the wind, sun flare. The product is a rigid object and does not change.</p>
+          <img src="assets/pipe_final.jpg" alt="Last frame of the video: the tea bowl after the camera push-in" data-i18n-alt="s3_alt">
+          <div class="n" data-i18n="s3_n">Step 3 · Animate</div>
+          <h3 data-i18n="s3_h">Push-in, 5 seconds</h3>
+          <div class="chips"><span class="chip">Seedance 2.0</span><span class="chip" data-i18n="chip_first">first frame</span><span class="chip">720p</span><span class="chip">$0.76</span></div>
+          <p data-i18n="s3_p">Slow push-in, grass in the wind, sun flare. The product is a rigid object and does not change.</p>
         </div>
       </div>
       <div class="callout">
-        <span class="eyebrow">Why a still first</span>
-        <p>Product identity is locked in a cheap frame before any motion. I checked every $0.10 start frame before paying 7× more for the video, so failed frames never became failed videos.</p>
+        <span class="eyebrow" data-i18n="why_eyebrow">Why a still first</span>
+        <p data-i18n="why_p">Product identity is locked in a cheap frame before any motion. I checked every $0.10 start frame before paying 7× more for the video, so failed frames never became failed videos.</p>
       </div>
     </div>
   </section>
 
   <section class="block" aria-labelledby="h-test">
     <div class="rail">
-      <div class="eyebrow">Inputs</div>
-      <h2 id="h-test">Test set</h2>
+      <div class="eyebrow" data-i18n="test_eyebrow">Inputs</div>
+      <h2 id="h-test" data-i18n="test_h">Test set</h2>
     </div>
     <div class="content">
-      <p>Five photos that look like real uploads: flash, clutter, a tilted phone. Each one targets a failure mode that product presets hit in practice.</p>
+      <p data-i18n="test_p">Five photos that look like real uploads: flash, clutter, a tilted phone. Each one targets a failure mode that product presets hit in practice.</p>
       <ul class="inputs">
-        <li><img src="assets/input_perfume.jpg" alt="Perfume bottle on a bathroom shelf"><div><b>Perfume</b><span>clear glass and liquid</span></div></li>
-        <li><img src="assets/input_sneaker.jpg" alt="Running sneaker on a hallway floor"><div><b>Sneaker</b><span>a shoe resting on a rock</span></div></li>
-        <li><img src="assets/input_can.jpg" alt="Energy drink can on a kitchen counter"><div><b>Can</b><span>small print on the label</span></div></li>
-        <li><img src="assets/input_headphones.jpg" alt="Headphones on an office desk"><div><b>Headphones</b><span>thin metal parts</span></div></li>
-        <li><img src="assets/input_kese.jpg" alt="Porcelain tea bowl with a blue ornament on a tablecloth"><div><b>Kese</b><span>ornament on porcelain</span></div></li>
+        <li><img src="assets/input_perfume.jpg" alt="Perfume bottle on a bathroom shelf" data-i18n-alt="in1_alt"><div><b data-i18n="in1_b">Perfume</b><span data-i18n="in1_s">clear glass and liquid</span></div></li>
+        <li><img src="assets/input_sneaker.jpg" alt="Running sneaker on a hallway floor" data-i18n-alt="in2_alt"><div><b data-i18n="in2_b">Sneaker</b><span data-i18n="in2_s">a shoe resting on a rock</span></div></li>
+        <li><img src="assets/input_can.jpg" alt="Energy drink can on a kitchen counter" data-i18n-alt="in3_alt"><div><b data-i18n="in3_b">Can</b><span data-i18n="in3_s">small print on the label</span></div></li>
+        <li><img src="assets/input_headphones.jpg" alt="Headphones on an office desk" data-i18n-alt="in4_alt"><div><b data-i18n="in4_b">Headphones</b><span data-i18n="in4_s">thin metal parts</span></div></li>
+        <li><img src="assets/input_kese.jpg" alt="Porcelain tea bowl with a blue ornament on a tablecloth" data-i18n-alt="in5_alt"><div><b data-i18n="in5_b">Kese</b><span data-i18n="in5_s">ornament on porcelain</span></div></li>
       </ul>
-      <p class="note">Test photos are generated to look like user uploads. Brands are fictional; real logos that appeared in one background are blurred.</p>
+      <p class="note" data-i18n="test_note">Test photos are generated to look like user uploads. Brands are fictional; real logos that appeared in one background are blurred.</p>
     </div>
   </section>
 
   <section class="block" aria-labelledby="h-iter">
     <div class="rail">
-      <div class="eyebrow">Error inventory</div>
-      <h2 id="h-iter">Three takes</h2>
+      <div class="eyebrow" data-i18n="iter_eyebrow">Error inventory</div>
+      <h2 id="h-iter" data-i18n="iter_h">Three takes</h2>
     </div>
     <div class="content">
-      <p>Every run was reviewed frame by frame. Each failure got a code, a cause and a fix in the prompts or parameters. Eight failure classes found, seven closed.</p>
+      <p data-i18n="iter_p">Every run was reviewed frame by frame. Each failure got a code, a cause and a fix in the prompts or parameters. Eight failure classes found, seven closed.</p>
 
-      <div class="take"><h3>Take 1</h3><span>v1 prompts · perfume, sneaker, headphones</span></div>
+      <div class="take"><h3 data-i18n="take1_h">Take 1</h3><span data-i18n="take1_s">v1 prompts · perfume, sneaker, headphones</span></div>
       <div class="errors">
         <article class="err">
-          <div class="shots"><img src="assets/e1_feathers.jpg" alt="Bird feathers stuck in the ground next to the perfume bottle"></div>
+          <div class="shots"><img src="assets/e1_feathers.jpg" alt="Bird feathers stuck in the ground next to the perfume bottle" data-i18n-alt="e1_alt"></div>
           <div class="body">
-            <div class="top"><span class="code">E1</span><span class="status ok">Fixed in v2</span></div>
-            <h4>"Feather grass" drawn as bird feathers</h4>
-            <p><b>Fix:</b> botanical name plus a visual description: "Stipa steppe grass with long silky silver seed awns".</p>
+            <div class="top"><span class="code">E1</span><span class="status ok" data-i18n="st_v2">Fixed in v2</span></div>
+            <h4 data-i18n="e1_h">"Feather grass" drawn as bird feathers</h4>
+            <p data-i18n="e1_p"><b>Fix:</b> botanical name plus a visual description: "Stipa steppe grass with long silky silver seed awns".</p>
           </div>
         </article>
         <article class="err">
-          <div class="shots"><img src="assets/e2_text.jpg" alt="Garbled lettering on the headphone cup"></div>
+          <div class="shots"><img src="assets/e2_text.jpg" alt="Garbled lettering on the headphone cup" data-i18n-alt="e2_alt"></div>
           <div class="body">
-            <div class="top"><span class="code">E2</span><span class="status ok">Fixed in v2</span></div>
-            <h4>Invented label text</h4>
-            <p>The enhancer misread a tiny logo as "soul"; the image model then drew garbled letters. <b>Fix:</b> quote only text read with certainty, otherwise write "a small unreadable logo"; no new text in the frame.</p>
+            <div class="top"><span class="code">E2</span><span class="status ok" data-i18n="st_v2">Fixed in v2</span></div>
+            <h4 data-i18n="e2_h">Invented label text</h4>
+            <p data-i18n="e2_p">The enhancer misread a tiny logo as "soul"; the image model then drew garbled letters. <b>Fix:</b> quote only text read with certainty, otherwise write "a small unreadable logo"; no new text in the frame.</p>
           </div>
         </article>
         <article class="err">
-          <div class="shots"><img src="assets/e3_pose.jpg" alt="Headphones standing upright on their ear cups"></div>
+          <div class="shots"><img src="assets/e3_pose.jpg" alt="Headphones standing upright on their ear cups" data-i18n-alt="e3_alt"></div>
           <div class="body">
-            <div class="top"><span class="code">E3</span><span class="status ok">Fixed in v2</span></div>
-            <h4>Physically unstable pose</h4>
-            <p>Headphones balanced upright on their cups. <b>Fix:</b> a resting-position rule per object type: shoes on the sole, headphones on their side, bottles and bowls upright.</p>
+            <div class="top"><span class="code">E3</span><span class="status ok" data-i18n="st_v2">Fixed in v2</span></div>
+            <h4 data-i18n="e3_h">Physically unstable pose</h4>
+            <p data-i18n="e3_p">Headphones balanced upright on their cups. <b>Fix:</b> a resting-position rule per object type: shoes on the sole, headphones on their side, bottles and bowls upright.</p>
           </div>
         </article>
         <article class="err">
-          <div class="shots"><img src="assets/e4_small.jpg" alt="Perfume bottle small in the frame"></div>
+          <div class="shots"><img src="assets/e4_small.jpg" alt="Perfume bottle small in the frame" data-i18n-alt="e4_alt"></div>
           <div class="body">
-            <div class="top"><span class="code">E4</span><span class="status part">Partly fixed</span></div>
-            <h4>Product too small at the start</h4>
-            <p>About 25% of frame height where the brief asked for half. <b>Fix:</b> shot size ("medium close-up, product large") instead of a percentage. Now 30–35%; the push-in ends near 70%.</p>
+            <div class="top"><span class="code">E4</span><span class="status part" data-i18n="st_part">Partly fixed</span></div>
+            <h4 data-i18n="e4_h">Product too small at the start</h4>
+            <p data-i18n="e4_p">About 25% of frame height where the brief asked for half. <b>Fix:</b> shot size ("medium close-up, product large") instead of a percentage. Now 30–35%; the push-in ends near 70%.</p>
           </div>
         </article>
         <article class="err">
-          <div class="shots"><img src="assets/before_after_headphones_poster.jpg" alt="Headphones in v1 and v3 side by side"></div>
+          <div class="shots"><img src="assets/before_after_headphones_poster.jpg" alt="Headphones in v1 and v3 side by side" data-i18n-alt="e5_alt"></div>
           <div class="body">
-            <div class="top"><span class="code">E5</span><span class="status ok">Fixed in v2</span></div>
-            <h4>Thin parts drift during the camera move</h4>
-            <p>The headband changed width and the sliders moved. <b>Fix:</b> "a rigid object that stays unchanged, including thin parts and edges" in the video prompt.</p>
+            <div class="top"><span class="code">E5</span><span class="status ok" data-i18n="st_v2">Fixed in v2</span></div>
+            <h4 data-i18n="e5_h">Thin parts drift during the camera move</h4>
+            <p data-i18n="e5_p">The headband changed width and the sliders moved. <b>Fix:</b> "a rigid object that stays unchanged, including thin parts and edges" in the video prompt.</p>
           </div>
         </article>
       </div>
 
-      <div class="take"><h3>Take 2</h3><span>v2 prompts · all five products · start frames only</span></div>
+      <div class="take"><h3 data-i18n="take2_h">Take 2</h3><span data-i18n="take2_s">v2 prompts · all five products · start frames only</span></div>
       <div class="errors">
         <article class="err">
           <div class="shots pair">
-            <div><img src="assets/e6_text_1k.jpg" alt="Can label at 1K where 250 reads like 2S0"><small>1K</small></div>
-            <div><img src="assets/e6_text_2k.jpg" alt="Can label at 2K, sharp"><small>2K</small></div>
+            <div><img src="assets/e6_text_1k.jpg" alt="Can label at 1K where 250 reads like 2S0" data-i18n-alt="e6_alt1"><small>1K</small></div>
+            <div><img src="assets/e6_text_2k.jpg" alt="Can label at 2K, sharp" data-i18n-alt="e6_alt2"><small>2K</small></div>
           </div>
           <div class="body">
-            <div class="top"><span class="code">E6</span><span class="status ok">Fixed in v3</span></div>
-            <h4>Small print at the edge of legibility</h4>
-            <p>At 1K "250 ml" reads like "2S0 ml". <b>Fix:</b> start frame at 2K for $0.03 more. The print stays legible in the 720p video.</p>
+            <div class="top"><span class="code">E6</span><span class="status ok" data-i18n="st_v3">Fixed in v3</span></div>
+            <h4 data-i18n="e6_h">Small print at the edge of legibility</h4>
+            <p data-i18n="e6_p">At 1K "250 ml" reads like "2S0 ml". <b>Fix:</b> start frame at 2K for $0.03 more. The print stays legible in the 720p video.</p>
           </div>
         </article>
         <article class="err">
           <div class="shots pair">
-            <div><img src="assets/e7_sprig.jpg" alt="Herb sprig floating in the tea"><small>v2</small></div>
-            <div><img src="assets/e7_fixed.jpg" alt="Clean tea surface"><small>v3</small></div>
+            <div><img src="assets/e7_sprig.jpg" alt="Herb sprig floating in the tea" data-i18n-alt="e7_alt1"><small>v2</small></div>
+            <div><img src="assets/e7_fixed.jpg" alt="Clean tea surface" data-i18n-alt="e7_alt2"><small>v3</small></div>
           </div>
           <div class="body">
-            <div class="top"><span class="code">E7</span><span class="status ok">Fixed in v3</span></div>
-            <h4>An added garnish</h4>
-            <p>The image model floated a herb sprig in the tea. <b>Fix:</b> no garnish, leaves, props or decorations on the product or its contents.</p>
+            <div class="top"><span class="code">E7</span><span class="status ok" data-i18n="st_v3">Fixed in v3</span></div>
+            <h4 data-i18n="e7_h">An added garnish</h4>
+            <p data-i18n="e7_p">The image model floated a herb sprig in the tea. <b>Fix:</b> no garnish, leaves, props or decorations on the product or its contents.</p>
           </div>
         </article>
       </div>
 
-      <div class="take"><h3>Video test</h3><span>same v3 start frames, other video models</span></div>
+      <div class="take"><h3 data-i18n="take3_h">Video test</h3><span data-i18n="take3_s">same v3 start frames, other video models</span></div>
       <div class="errors">
         <article class="err">
-          <div class="shots"><img src="assets/video_models_can_poster.jpg" alt="Three video models side by side on the can"></div>
+          <div class="shots"><img src="assets/video_models_can_poster.jpg" alt="Three video models side by side on the can" data-i18n-alt="e8_alt"></div>
           <div class="body">
-            <div class="top"><span class="code">E8</span><span class="status ok">Fixed for Veo</span></div>
-            <h4>Veo 3.1 Lite ignored the push-in</h4>
-            <p>With the shared prompt the camera stayed almost still, and "dust particles" became flying flakes. <b>Fix:</b> a Veo-specific motion prompt, described below.</p>
+            <div class="top"><span class="code">E8</span><span class="status ok" data-i18n="st_veo">Fixed for Veo</span></div>
+            <h4 data-i18n="e8_h">Veo 3.1 Lite ignored the push-in</h4>
+            <p data-i18n="e8_p">With the shared prompt the camera stayed almost still, and "dust particles" became flying flakes. <b>Fix:</b> a Veo-specific motion prompt, described below.</p>
           </div>
         </article>
         <figure class="vid">
-          <video src="assets/before_after_headphones.mp4" poster="assets/before_after_headphones_poster.jpg" muted loop playsinline preload="none" controls aria-label="Headphones, take 1 against take 3"></video>
-          <figcaption>Headphones, take 1 against take 3: upright pose, garbled text and a drifting band, then a resting pose, the real logo and a rigid band.</figcaption>
+          <video src="assets/before_after_headphones.mp4" poster="assets/before_after_headphones_poster.jpg" muted loop playsinline preload="none" controls aria-label="Headphones, take 1 against take 3" data-i18n-aria="ba_aria"></video>
+          <figcaption data-i18n="ba_cap">Headphones, take 1 against take 3: upright pose, garbled text and a drifting band, then a resting pose, the real logo and a rigid band.</figcaption>
         </figure>
       </div>
     </div>
@@ -466,169 +489,408 @@
 
   <section class="block" aria-labelledby="h-models">
     <div class="rail">
-      <div class="eyebrow">Model choice</div>
-      <h2 id="h-models">Start frame</h2>
+      <div class="eyebrow" data-i18n="choice_eyebrow">Model choice</div>
+      <h2 id="h-models" data-i18n="models_h">Start frame</h2>
     </div>
     <div class="content">
-      <p>The four most used image models on OpenRouter, given the same enhanced prompt and the same reference photo. Popularity alone did not decide it.</p>
+      <p data-i18n="models_p">The four most used image models on OpenRouter, given the same enhanced prompt and the same reference photo. Popularity alone did not decide it.</p>
       <div class="models">
         <div class="model">
-          <img src="assets/m_can_1.jpg" alt="Flash-lite start frame">
+          <img src="assets/m_can_1.jpg" alt="Flash-lite start frame" data-i18n-alt="m1_alt">
           <div class="head"><span class="rank">#1</span><span class="price">$0.034</span></div>
           <div class="name">gemini-3.1-flash-lite-image</div>
-          <p>Cheapest, but rejects 2K and redrew the kese ornament as an all-over pattern.</p>
+          <p data-i18n="m1_p">Cheap, but rejects 2K and redrew the kese ornament as an all-over pattern.</p>
         </div>
         <div class="model chosen">
-          <img src="assets/m_can_2.jpg" alt="Nano Banana 2 start frame">
-          <div class="head"><span class="rank">#2</span><span class="price">$0.10 at 2K</span></div>
-          <div class="name">gemini-3.1-flash-image · chosen</div>
-          <p>Keeps the product and follows the lighting brief. Sharp small print at 2K.</p>
+          <img src="assets/m_can_2.jpg" alt="Nano Banana 2 start frame" data-i18n-alt="m2_alt">
+          <div class="head"><span class="rank">#2</span><span class="price" data-i18n="m2_price">$0.10 at 2K</span></div>
+          <div class="name" data-i18n="m2_name">gemini-3.1-flash-image · chosen</div>
+          <p data-i18n="m2_p">Keeps the product and follows the lighting brief. Sharp small print at 2K.</p>
         </div>
         <div class="model">
-          <img src="assets/m_can_3.jpg" alt="Seedream 4.5 start frame">
+          <img src="assets/m_can_3.jpg" alt="Seedream 4.5 start frame" data-i18n-alt="m3_alt">
           <div class="head"><span class="rank">#3</span><span class="price">$0.04</span></div>
           <div class="name">seedream-4.5</div>
-          <p>Sharp text, but drew bird feathers for "feather grass" (E1) and takes 35 s a frame.</p>
+          <p data-i18n="m3_p">Sharp text, but drew bird feathers for "feather grass" (E1) and takes 35 s a frame.</p>
         </div>
         <div class="model">
-          <img src="assets/m_can_4.jpg" alt="GPT Image 2.5 start frame">
+          <img src="assets/m_can_4.jpg" alt="GPT Image 2.5 start frame" data-i18n-alt="m4_alt">
           <div class="head"><span class="rank">#4</span><span class="price">$0.018</span></div>
           <div class="name">gpt-image-2.5-sunburst</div>
-          <p>Sharpest print and cheapest. Drifted to an orange sunset and added condensation drops.</p>
+          <p data-i18n="m4_p">Sharpest print and cheapest. Drifted to an orange sunset and added condensation drops.</p>
         </div>
       </div>
       <div class="pair2">
-        <figure><img src="assets/m_kese_1.jpg" alt="Kese by flash-lite with the ornament covering the whole bowl"><figcaption>#1 flash-lite: the rim band became an ornament over the whole bowl.</figcaption></figure>
-        <figure><img src="assets/m_kese_2.jpg" alt="Kese by Nano Banana 2 with the rim band as in the photo"><figcaption>#2 Nano Banana 2: the band stays at the rim, as in the user's photo.</figcaption></figure>
+        <figure><img src="assets/m_kese_1.jpg" alt="Kese by flash-lite with the ornament covering the whole bowl" data-i18n-alt="k1_alt"><figcaption data-i18n="k1_cap">#1 flash-lite: the rim band became an ornament over the whole bowl.</figcaption></figure>
+        <figure><img src="assets/m_kese_2.jpg" alt="Kese by Nano Banana 2 with the rim band as in the photo" data-i18n-alt="k2_alt"><figcaption data-i18n="k2_cap">#2 Nano Banana 2: the band stays at the rim, as in the user's photo.</figcaption></figure>
       </div>
     </div>
   </section>
 
   <section class="block" aria-labelledby="h-video">
     <div class="rail">
-      <div class="eyebrow">Model choice</div>
-      <h2 id="h-video">Video</h2>
+      <div class="eyebrow" data-i18n="choice_eyebrow">Model choice</div>
+      <h2 id="h-video" data-i18n="video_h">Video</h2>
     </div>
     <div class="content">
-      <p>OpenRouter publishes no ranking for video models, so I ran the same start frames through three candidates.</p>
+      <p data-i18n="video_p">OpenRouter publishes no ranking for video models, so I ran the same start frames through three candidates.</p>
       <figure class="vid">
-        <video src="assets/video_models_can.mp4" poster="assets/video_models_can_poster.jpg" muted loop playsinline preload="none" controls aria-label="Seedance 2.0 against Veo 3.1 Lite with two prompts"></video>
-        <figcaption>Left to right: Seedance 2.0; Veo 3.1 Lite with the shared prompt, where the camera barely moves; Veo 3.1 Lite with its own dolly prompt.</figcaption>
+        <video src="assets/video_models_can.mp4" poster="assets/video_models_can_poster.jpg" muted loop playsinline preload="none" controls aria-label="Seedance 2.0 against Veo 3.1 Lite with two prompts" data-i18n-aria="vc_aria"></video>
+        <figcaption data-i18n="vc_cap">Left to right: Seedance 2.0; Veo 3.1 Lite with the shared prompt, where the camera barely moves; Veo 3.1 Lite with its own dolly prompt.</figcaption>
       </figure>
       <div class="tbl">
         <table>
-          <thead><tr><th>Model</th><th>Output</th><th>Cost per clip</th><th>Render</th><th>Result</th></tr></thead>
+          <thead><tr><th data-i18n="th_model">Model</th><th data-i18n="th_out">Output</th><th data-i18n="th_cost">Cost per clip</th><th data-i18n="th_render">Render</th><th data-i18n="th_result">Result</th></tr></thead>
           <tbody>
-            <tr><td><span class="mono">Seedance 2.0</span></td><td class="num">720p · 5 s</td><td class="num">$0.76</td><td class="num">150–180 s</td><td>Strongest push-in, product from ~30% to ~70% of the frame. Used for the reel.</td></tr>
-            <tr><td><span class="mono">Seedance 2.5</span></td><td class="num">720p max</td><td class="num">$1.16</td><td class="num">249 s</td><td>No visible gain over 2.0 on the headphones for 1.5× the price. One test.</td></tr>
-            <tr><td><span class="mono">Veo 3.1 Lite</span></td><td class="num">1080p · 6 s</td><td class="num">$0.30</td><td class="num">100–115 s</td><td>Shared prompt: nearly static camera. Own dolly prompt: push-in works, shallower (~35% to ~50%), sharper labels.</td></tr>
+            <tr><td><span class="mono">Seedance 2.0</span></td><td class="num" data-i18n="r1_out">720p · 5 s</td><td class="num">$0.76</td><td class="num" data-i18n="r1_render">150–180 s</td><td data-i18n="r1_res">Strongest push-in, product from ~30% to ~70% of the frame. Used for the reel.</td></tr>
+            <tr><td><span class="mono">Seedance 2.5</span></td><td class="num" data-i18n="r2_out">720p max</td><td class="num">$1.16</td><td class="num" data-i18n="r2_render">249 s</td><td data-i18n="r2_res">No visible gain over 2.0 on the headphones for 1.5× the price. One test.</td></tr>
+            <tr><td><span class="mono">Veo 3.1 Lite</span></td><td class="num" data-i18n="r3_out">1080p · 6 s</td><td class="num">$0.30</td><td class="num" data-i18n="r3_render">100–115 s</td><td data-i18n="r3_res">Shared prompt: nearly static camera. Own dolly prompt: push-in works, shallower (~35% to ~50%), sharper labels.</td></tr>
           </tbody>
         </table>
       </div>
       <div class="callout">
-        <span class="eyebrow">Takeaway</span>
-        <p>Each video model has its own motion vocabulary, so the preset keeps one motion prompt per model. The next version ships two tiers: Veo 3.1 Lite at 1080p by default for about $0.40 a result, and Seedance 2.0 when the camera move matters most.</p>
+        <span class="eyebrow" data-i18n="takeaway_eyebrow">Takeaway</span>
+        <p data-i18n="takeaway_p">Each video model has its own motion vocabulary, so the preset keeps one motion prompt per model. The next version ships two tiers: Veo 3.1 Lite at 1080p by default for about $0.40 a result, and Seedance 2.0 when the camera move matters most.</p>
       </div>
       <figure class="vid">
-        <video src="assets/video_models_headphones.mp4" poster="assets/video_models_headphones_poster.jpg" muted loop playsinline preload="none" controls aria-label="Headphones on Seedance 2.0, Seedance 2.5 and Veo 3.1 Lite"></video>
-        <figcaption>Headphones on Seedance 2.0, Seedance 2.5 and Veo 3.1 Lite with the shared prompt.</figcaption>
+        <video src="assets/video_models_headphones.mp4" poster="assets/video_models_headphones_poster.jpg" muted loop playsinline preload="none" controls aria-label="Headphones on Seedance 2.0, Seedance 2.5 and Veo 3.1 Lite" data-i18n-aria="vh_aria"></video>
+        <figcaption data-i18n="vh_cap">Headphones on Seedance 2.0, Seedance 2.5 and Veo 3.1 Lite with the shared prompt.</figcaption>
       </figure>
     </div>
   </section>
 
   <section class="block" aria-labelledby="h-graph">
     <div class="rail">
-      <div class="eyebrow">Build</div>
-      <h2 id="h-graph">The graph</h2>
+      <div class="eyebrow" data-i18n="graph_eyebrow">Build</div>
+      <h2 id="h-graph" data-i18n="graph_h">The graph</h2>
     </div>
     <div class="content">
       <figure class="graph">
-        <img src="assets/graph.jpg" alt="ComfyUI graph: product photo, prompt enhancer, start frame, video and saved results">
+        <img src="assets/graph.jpg" alt="ComfyUI graph: product photo, prompt enhancer, start frame, video and saved results" data-i18n-alt="graph_alt">
       </figure>
       <div class="shotpair">
-        <p>The preset as a ComfyUI graph on my own OpenRouter nodes. The model dropdowns list models by real usage and show each model's OpenRouter price plus the actual cost of its last run here, so choosing a model is a cost decision made in the graph itself.</p>
-        <img src="assets/dropdown.jpg" alt="Model dropdown listing image models with rank, price per million tokens and last run cost">
+        <p data-i18n="graph_p">The preset as a ComfyUI graph on my own OpenRouter nodes. The model dropdowns list models by real usage and show each model's OpenRouter price plus the actual cost of its last run here, so choosing a model is a cost decision made in the graph itself.</p>
+        <img src="assets/dropdown.jpg" alt="Model dropdown listing image models with rank, price per million tokens and last run cost" data-i18n-alt="dd_alt">
       </div>
       <div class="facts">
-        <div class="fact"><div class="v">$0.86</div><div class="k">per result with Seedance 2.0; about $0.40 with Veo 3.1 Lite</div></div>
-        <div class="fact"><div class="v">~$11.6</div><div class="k">total R&amp;D on OpenRouter, every failed and comparison run included</div></div>
-        <div class="fact"><div class="v">7 / 8</div><div class="k">failure classes closed across three takes</div></div>
+        <div class="fact"><div class="v">$0.86</div><div class="k" data-i18n="f1_k">per result with Seedance 2.0; about $0.40 with Veo 3.1 Lite</div></div>
+        <div class="fact"><div class="v">~$11.6</div><div class="k" data-i18n="f2_k">total R&amp;D on OpenRouter, every failed and comparison run included</div></div>
+        <div class="fact"><div class="v">7 / 8</div><div class="k" data-i18n="f3_k">failure classes closed across three takes</div></div>
       </div>
       <ul class="ticks">
-        <li><span><b>Next:</b> a reframe step or a vision-model size check to close E4 before the video is paid for.</span></li>
-        <li><span><b>Next:</b> automatic QA. A vision model compares the start frame with the user's photo (text, shape, color, added objects) and retries. It would have caught E2, E6 and E7 without a person looking at every frame.</span></li>
+        <li><span data-i18n="next1"><b>Next:</b> a reframe step or a vision-model size check to close E4 before the video is paid for.</span></li>
+        <li><span data-i18n="next2"><b>Next:</b> automatic QA. A vision model compares the start frame with the user's photo (text, shape, color, added objects) and retries. It would have caught E2, E6 and E7 without a person looking at every frame.</span></li>
       </ul>
     </div>
   </section>
 
   <section class="block" aria-labelledby="h-tool">
     <div class="rail">
-      <div class="eyebrow">Tooling · OpenRouter</div>
-      <h2 id="h-tool">ComfyUI nodes</h2>
+      <div class="eyebrow" data-i18n="tool_eyebrow">Tooling · OpenRouter</div>
+      <h2 id="h-tool" data-i18n="tool_h">ComfyUI nodes</h2>
     </div>
     <div class="content">
-      <p>ComfyUI's built-in OpenRouter node goes through Comfy's billing proxy and offers two image models and no video. I wrote three nodes that use your own key: <span class="mono">Image</span> (55 models), <span class="mono">Video</span> (25) and <span class="mono">LLM</span> (441).</p>
-      <p class="repo">Source, MIT: <a href="https://github.com/eldarazbanbayev/comfyui-openrouter" class="mono">github.com/eldarazbanbayev/comfyui-openrouter</a></p>
+      <p data-i18n="tool_p">ComfyUI's built-in OpenRouter node goes through Comfy's billing proxy and offers two image models and no video. I wrote three nodes that use your own key: <span class="mono">Image</span> (55 models), <span class="mono">Video</span> (25) and <span class="mono">LLM</span> (441).</p>
+      <p class="repo" data-i18n="tool_repo">Source, MIT: <a href="https://github.com/eldarazbanbayev/comfyui-openrouter" class="mono">github.com/eldarazbanbayev/comfyui-openrouter</a></p>
       <ul class="ticks">
-        <li><span>Model lists sorted by OpenRouter's rankings dataset, with price labels, the real cost of the last run and a tooltip with the full price table and supported durations and resolutions.</span></li>
-        <li><span>Model-aware requests: output modalities per model, a fallback to <span class="mono">POST /images</span> for GPT Image 2.5, video durations snapped to supported values, and unsupported resolutions or last frames rejected before a paid job starts.</span></li>
-        <li><span>Found while building this case: uncapped <span class="mono">max_tokens</span> reserved credit for 58K tokens per image; a 2K PNG start frame took 45 s to upload until frames went as JPEG; video jobs cut off by an app restart are recovered by job id instead of being paid twice.</span></li>
-        <li><span>The API key is read from a file and never saved into workflow JSON that gets shared.</span></li>
+        <li><span data-i18n="t1">Model lists sorted by OpenRouter's rankings dataset, with price labels, the real cost of the last run and a tooltip with the full price table and supported durations and resolutions.</span></li>
+        <li><span data-i18n="t2">Model-aware requests: output modalities per model, a fallback to <span class="mono">POST /images</span> for GPT Image 2.5, video durations snapped to supported values, and unsupported resolutions or last frames rejected before a paid job starts.</span></li>
+        <li><span data-i18n="t3">Found while building this case: uncapped <span class="mono">max_tokens</span> reserved credit for 58K tokens per image; a 2K PNG start frame took 45 s to upload until frames went as JPEG; video jobs cut off by an app restart are recovered by job id instead of being paid twice.</span></li>
+        <li><span data-i18n="t4">The API key is read from a file and never saved into workflow JSON that gets shared.</span></li>
       </ul>
     </div>
   </section>
 
   <section class="block" aria-labelledby="h-prod">
     <div class="rail">
-      <div class="eyebrow">Production</div>
-      <h2 id="h-prod">Falcon OS agents</h2>
+      <div class="eyebrow" data-i18n="prod_eyebrow">Production</div>
+      <h2 id="h-prod" data-i18n="prod_h">Falcon OS agents</h2>
     </div>
     <div class="content">
-      <p>At Digital Arts I build Falcon OS, a multi-agent platform. Every generative capability is a container with a typed manifest (prompt, negative prompt, reference media, model, seed) and an asynchronous submit, poll and download cycle.</p>
-      <p>Generative agents I built there: Higgsfield image and video, Nano Banana image editing, Envato Gen AI for images, video, voice, music and sound effects, ElevenLabs voice and speech-to-text. A manifest is the same idea as a preset: simple typed inputs outside, a fixed recipe inside.</p>
+      <p data-i18n="prod_p1">At Digital Arts I build Falcon OS, a multi-agent platform. Every generative capability is a container with a typed manifest (prompt, negative prompt, reference media, model, seed) and an asynchronous submit, poll and download cycle.</p>
+      <p data-i18n="prod_p2">Generative agents I built there: Higgsfield image and video, Nano Banana image editing, Envato Gen AI for images, video, voice, music and sound effects, ElevenLabs voice and speech-to-text. A manifest is the same idea as a preset: simple typed inputs outside, a fixed recipe inside.</p>
     </div>
   </section>
 
   <footer class="end">
     <span>Eldar Azbanbayev · eldar.imsc@gmail.com · Telegram @oiradle · <a href="https://github.com/eldarazbanbayev">github.com/eldarazbanbayev</a></span>
-    <span>Built September 2026 with ComfyUI and OpenRouter</span>
+    <span data-i18n="built">Built September 2026 with ComfyUI and OpenRouter</span>
   </footer>
 </div>
 
 <script>
+(function () {
+  // Russian copy. English lives in the markup and is captured on load.
+  var RU = {
+    top_eyebrow: "Портфолио · Промпт-инженер",
+    lang_group: "Язык",
+    role: "<b>Инженер генеративного ИИ.</b> Делаю пресеты и пайплайны, которые превращают одну загрузку в готовый кадр, и проверяю, где они ломаются.",
+    contact: "Контакты",
+    k_email: "Почта",
+    k_based: "Город",
+    v_based: "Астана · готов работать в офисе в Алматы",
+
+    case_eyebrow: "Кейс · Steppe Hero, товарный пресет в один клик",
+    reel_aria: "Результаты Steppe Hero на пяти тестовых товарах, в углу фото пользователя",
+    sl_in: "Вход",
+    sl_in_v: "1 фото с телефона",
+    sl_out: "Выход",
+    sl_out_v: "5 с · 720p · 24 fps",
+    sl_cost: "Цена",
+    sl_cost_v: "$0.86 за результат",
+    sl_time: "Время",
+    sl_time_v: "~3 мин",
+    sl_iter: "Итерации",
+    sl_iter_v: "3 дубля · 8 ошибок",
+    sl_runs: "Работает на",
+    lede1: "Пользователь загружает одно фото товара, снятое на телефон в неубранной комнате. Пресет возвращает пятисекундный ролик: тот же товар на гранитном валуне в казахской степи в золотой час, медленный наезд камеры, ковыль на ветру, тёплый контровой свет.",
+    lede2: "Форма, цвета и надписи на этикетке должны остаться как есть. Всё остальное делает пресет. В ролике пять тестовых товаров, в углу исходное фото пользователя.",
+
+    pipe_eyebrow: "Как устроено",
+    pipe_h: "Пайплайн",
+    pipe_p: "Три модели в одном графе ComfyUI. Я взял их из рейтинга OpenRouter по использованию (токены всех пользователей за неделю до 24&nbsp;сентября 2026), а потом оставил или заменил каждую по результатам на тестовом наборе.",
+    s1_alt: "Фото с телефона: фарфоровая пиала на заставленном столе",
+    s1_n: "Шаг 1 · Читаем фото",
+    s1_h: "Промпт-энхансер",
+    chip_text1: "#1 по тексту",
+    s1_p: "Точно описывает товар, цитирует только тот текст, который читается наверняка, добавляет пометку о материале для стекла, металла или матовых поверхностей и выбирает естественное положение. Потом заполняет мастер-шаблон.",
+    s2_alt: "Стартовый кадр: пиала на гранитном валуне в степи, золотой час",
+    s2_n: "Шаг 2 · Собираем стартовый кадр",
+    s2_h: "Товар в сцене, 2K",
+    chip_img2: "#2 по картинкам",
+    s2_p: "Пересобирает товар на валуне, фото пользователя идёт как референс, чтобы товар остался тем же. Без нового текста, реквизита и декора.",
+    s3_alt: "Последний кадр видео: пиала после наезда камеры",
+    s3_n: "Шаг 3 · Анимируем",
+    s3_h: "Наезд, 5 секунд",
+    chip_first: "первый кадр",
+    s3_p: "Медленный наезд, трава на ветру, блик солнца. Товар жёсткий и не меняется.",
+    why_eyebrow: "Зачем сначала кадр",
+    why_p: "Внешний вид товара фиксируется в дешёвом кадре ещё до движения. Я проверял каждый стартовый кадр за $0.10, прежде чем платить в 7 раз больше за видео, так что неудачный кадр ни разу не превратился в неудачное видео.",
+
+    test_eyebrow: "Входные данные",
+    test_h: "Тестовый набор",
+    test_p: "Пять фото, похожих на реальные загрузки: вспышка, бардак, заваленный горизонт. Каждое бьёт в слабое место, на котором товарные пресеты спотыкаются на практике.",
+    in1_alt: "Флакон духов на полке в ванной",
+    in1_b: "Духи",
+    in1_s: "прозрачное стекло и жидкость",
+    in2_alt: "Беговой кроссовок на полу в прихожей",
+    in2_b: "Кроссовок",
+    in2_s: "обувь на камне",
+    in3_alt: "Банка энергетика на кухонной столешнице",
+    in3_b: "Банка",
+    in3_s: "мелкий шрифт на этикетке",
+    in4_alt: "Наушники на офисном столе",
+    in4_b: "Наушники",
+    in4_s: "тонкие металлические детали",
+    in5_alt: "Фарфоровая пиала с синим орнаментом на скатерти",
+    in5_b: "Кесе",
+    in5_s: "орнамент на фарфоре",
+    test_note: "Тестовые фото сгенерированы так, чтобы выглядеть как загрузки пользователей. Бренды выдуманы, а настоящие логотипы, попавшие в фон одного фото, размыты.",
+
+    iter_eyebrow: "Реестр ошибок",
+    iter_h: "Три дубля",
+    iter_p: "Каждый прогон я разбирал покадрово. У каждой ошибки есть код, причина и исправление в промптах или параметрах. Нашёл восемь классов ошибок, закрыл семь.",
+    take1_h: "Дубль 1",
+    take1_s: "промпты v1 · духи, кроссовок, наушники",
+    st_v2: "Исправлено в v2",
+    st_v3: "Исправлено в v3",
+    st_part: "Частично",
+    st_veo: "Исправлено для Veo",
+    e1_alt: "Птичьи перья торчат из земли рядом с флаконом духов",
+    e1_h: "«Feather grass» (ковыль) нарисован птичьими перьями",
+    e1_p: "<b>Исправление:</b> ботаническое название и описание внешнего вида: «Stipa steppe grass with long silky silver seed awns».",
+    e2_alt: "Каша из букв на чашке наушников",
+    e2_h: "Выдуманный текст на товаре",
+    e2_p: "Энхансер прочитал крошечный логотип как «soul», а модель картинок нарисовала кашу из букв. <b>Исправление:</b> цитировать только текст, прочитанный наверняка, иначе писать «a small unreadable logo»; нового текста в кадре не добавлять.",
+    e3_alt: "Наушники стоят вертикально на амбушюрах",
+    e3_h: "Физически неустойчивая поза",
+    e3_p: "Наушники балансировали стоя на амбушюрах. <b>Исправление:</b> правило положения для каждого типа предметов: обувь на подошве, наушники на боку, флаконы и пиалы стоя.",
+    e4_alt: "Флакон духов мелко в кадре",
+    e4_h: "Товар слишком мелкий в начале",
+    e4_p: "Около 25% высоты кадра, хотя бриф просил половину. <b>Исправление:</b> крупность плана («medium close-up, product large») вместо процентов. Теперь 30–35%, к концу наезда около 70%.",
+    e5_alt: "Наушники в v1 и v3 рядом",
+    e5_h: "Тонкие детали плывут при движении камеры",
+    e5_p: "Оголовье меняло ширину, ползунки съезжали. <b>Исправление:</b> в видеопромпте «a rigid object that stays unchanged, including thin parts and edges».",
+    take2_h: "Дубль 2",
+    take2_s: "промпты v2 · все пять товаров · только стартовые кадры",
+    e6_alt1: "Этикетка банки в 1K: 250 читается как 2S0",
+    e6_alt2: "Этикетка банки в 2K, всё чётко",
+    e6_h: "Мелкий шрифт на грани читаемости",
+    e6_p: "В 1K «250 ml» читается как «2S0 ml». <b>Исправление:</b> стартовый кадр в 2K, это на $0.03 дороже. В видео 720p надпись остаётся читаемой.",
+    e7_alt1: "Веточка травы плавает в чае",
+    e7_alt2: "Чистая поверхность чая",
+    e7_h: "Непрошеный декор",
+    e7_p: "Модель картинок пустила в чай веточку травы. <b>Исправление:</b> никаких украшений, листьев, реквизита и декора на товаре и внутри него.",
+    take3_h: "Тест видео",
+    take3_s: "те же стартовые кадры v3, другие видеомодели",
+    e8_alt: "Три видеомодели рядом на банке",
+    e8_h: "Veo 3.1 Lite проигнорировал наезд",
+    e8_p: "С общим промптом камера почти стояла, а «dust particles» превратились в летающие хлопья. <b>Исправление:</b> отдельный промпт движения для Veo, подробнее ниже.",
+    ba_aria: "Наушники: дубль 1 против дубля 3",
+    ba_cap: "Наушники, дубль 1 против дубля 3. Было: стоят на амбушюрах, каша вместо текста, оголовье плывёт. Стало: лежат на боку, настоящий логотип, оголовье жёсткое.",
+
+    choice_eyebrow: "Выбор модели",
+    models_h: "Стартовый кадр",
+    models_p: "Четыре самые используемые модели картинок на OpenRouter, один и тот же улучшенный промпт и одно и то же фото-референс. Одна популярность ничего не решила.",
+    m1_alt: "Стартовый кадр от flash-lite",
+    m1_p: "Дешёвая, но не берёт 2K и перерисовала орнамент кесе в узор по всей пиале.",
+    m2_alt: "Стартовый кадр от Nano Banana 2",
+    m2_price: "$0.10 в 2K",
+    m2_name: "gemini-3.1-flash-image · выбрана",
+    m2_p: "Сохраняет товар и следует брифу по свету. Мелкий шрифт в 2K чёткий.",
+    m3_alt: "Стартовый кадр от Seedream 4.5",
+    m3_p: "Чёткий текст, но нарисовала птичьи перья вместо «feather grass» (E1) и тратит 35 с на кадр.",
+    m4_alt: "Стартовый кадр от GPT Image 2.5",
+    m4_p: "Самый чёткий шрифт и самая низкая цена. Но ушла в оранжевый закат и добавила капли конденсата.",
+    k1_alt: "Кесе от flash-lite: орнамент по всей пиале",
+    k1_cap: "#1 flash-lite: полоска у края превратилась в орнамент по всей пиале.",
+    k2_alt: "Кесе от Nano Banana 2: полоска у края, как на фото",
+    k2_cap: "#2 Nano Banana 2: полоска осталась у края, как на фото пользователя.",
+
+    video_h: "Видео",
+    video_p: "Рейтинга видеомоделей OpenRouter не публикует, поэтому я прогнал одни и те же стартовые кадры через трёх кандидатов.",
+    vc_aria: "Seedance 2.0 против Veo 3.1 Lite с двумя промптами",
+    vc_cap: "Слева направо: Seedance 2.0; Veo 3.1 Lite с общим промптом, камера почти не двигается; Veo 3.1 Lite со своим промптом на наезд.",
+    th_model: "Модель",
+    th_out: "Выход",
+    th_cost: "Цена ролика",
+    th_render: "Рендер",
+    th_result: "Результат",
+    r1_out: "720p · 5 с",
+    r1_render: "150–180 с",
+    r1_res: "Самый сильный наезд, товар растёт с ~30% до ~70% кадра. Он и пошёл в шоурил.",
+    r2_out: "максимум 720p",
+    r2_render: "249 с",
+    r2_res: "На наушниках видимой разницы с 2.0 нет, а цена в 1,5 раза выше. Один тест.",
+    r3_out: "1080p · 6 с",
+    r3_render: "100–115 с",
+    r3_res: "С общим промптом камера почти статична. Со своим промптом на наезд работает, но слабее (с ~35% до ~50%), надписи чётче.",
+    takeaway_eyebrow: "Вывод",
+    takeaway_p: "У каждой видеомодели свой словарь движения, поэтому в пресете отдельный промпт движения под каждую модель. В следующей версии будет два уровня: по умолчанию Veo 3.1 Lite в 1080p, примерно $0.40 за результат, и Seedance 2.0, когда важнее всего движение камеры.",
+    vh_aria: "Наушники на Seedance 2.0, Seedance 2.5 и Veo 3.1 Lite",
+    vh_cap: "Наушники на Seedance 2.0, Seedance 2.5 и Veo 3.1 Lite с общим промптом.",
+
+    graph_eyebrow: "Сборка",
+    graph_h: "Граф",
+    graph_alt: "Граф ComfyUI: фото товара, промпт-энхансер, стартовый кадр, видео и сохранённые результаты",
+    graph_p: "Пресет как граф ComfyUI на моих собственных нодах OpenRouter. В выпадающих списках модели идут по реальному использованию, у каждой видна цена на OpenRouter и фактическая стоимость последнего прогона. Модель выбираешь прямо в графе и сразу видишь, сколько это стоит.",
+    dd_alt: "Выпадающий список моделей картинок: ранг, цена за миллион токенов и стоимость последнего прогона",
+    f1_k: "за результат на Seedance 2.0; около $0.40 на Veo 3.1 Lite",
+    f2_k: "всего на R&amp;D в OpenRouter, включая все неудачные и сравнительные прогоны",
+    f3_k: "классов ошибок закрыто за три дубля",
+    next1: "<b>Дальше:</b> шаг рефрейма или проверка размера vision-моделью, чтобы закрыть E4 до оплаты видео.",
+    next2: "<b>Дальше:</b> автоматический QA. Vision-модель сравнивает стартовый кадр с фото пользователя (текст, форма, цвет, лишние объекты) и перезапускает генерацию. Она поймала бы E2, E6 и E7 без человека, который смотрит каждый кадр.",
+
+    tool_eyebrow: "Инструменты · OpenRouter",
+    tool_h: "Ноды для ComfyUI",
+    tool_p: `Встроенная нода OpenRouter в ComfyUI ходит через биллинг-прокси Comfy и даёт две модели картинок и ни одной видео. Я написал три ноды, которые работают с собственным ключом OpenRouter: <span class="mono">Image</span> (55 моделей), <span class="mono">Video</span> (25) и <span class="mono">LLM</span> (441).`,
+    tool_repo: `Исходники, MIT: <a href="https://github.com/eldarazbanbayev/comfyui-openrouter" class="mono">github.com/eldarazbanbayev/comfyui-openrouter</a>`,
+    t1: "Списки моделей отсортированы по рейтингу OpenRouter, с ценами, реальной стоимостью последнего прогона и подсказкой с полной таблицей цен, поддерживаемыми длительностями и разрешениями.",
+    t2: `Запросы с учётом модели: модальности выхода для каждой модели, фолбэк на <span class="mono">POST /images</span> для GPT Image 2.5, длительность видео подгоняется под допустимые значения, а неподдерживаемые разрешения или последний кадр отсекаются до запуска платной задачи.`,
+    t3: `Нашёл, пока собирал кейс: без лимита <span class="mono">max_tokens</span> резервировался кредит на 58K токенов за картинку; стартовый кадр 2K в PNG грузился 45 с, пока кадры не стали уходить в JPEG; видеозадачи, оборванные перезапуском приложения, восстанавливаются по id, а не оплачиваются второй раз.`,
+    t4: "API-ключ читается из файла и никогда не попадает в JSON воркфлоу, которым делятся.",
+
+    prod_eyebrow: "Продакшн",
+    prod_h: "Агенты Falcon OS",
+    prod_p1: "В Digital Arts я делаю Falcon OS, мультиагентную платформу. Каждая генеративная функция там живёт в контейнере с типизированным манифестом (промпт, негативный промпт, референсы, модель, сид) и асинхронным циклом: отправка, опрос, скачивание.",
+    prod_p2: "Генеративные агенты, которые я там сделал: Higgsfield для картинок и видео, Nano Banana для редактирования изображений, Envato Gen AI для картинок, видео, голоса, музыки и звуковых эффектов, ElevenLabs для озвучки и распознавания речи. Манифест устроен как пресет: снаружи простые типизированные входы, внутри фиксированный рецепт.",
+
+    built: "Сделано в сентябре 2026 на ComfyUI и OpenRouter"
+  };
+  var UI = {
+    en: { title: "Eldar Azbanbayev Portfolio", copy: "Copy", copied: "Copied", selected: "Selected" },
+    ru: { title: "Eldar Azbanbayev · портфолио", copy: "Копировать", copied: "Скопировано", selected: "Выделено" }
+  };
+  var STORE = "portfolio-lang";
+  var lang = "en";
+
+  var items = [].slice.call(document.querySelectorAll("[data-i18n], [data-i18n-alt], [data-i18n-aria]")).map(function (el) {
+    return { el: el, html: el.innerHTML, alt: el.getAttribute("alt"), aria: el.getAttribute("aria-label") };
+  });
+  var copyButtons = [].slice.call(document.querySelectorAll("button.copy"));
+  var langButtons = [].slice.call(document.querySelectorAll("button[data-lang]"));
+
+  function pick(key, en) { return lang === "ru" && RU[key] != null ? RU[key] : en; }
+
+  function apply(next) {
+    lang = next === "ru" ? "ru" : "en";
+    items.forEach(function (it) {
+      var k = it.el.getAttribute("data-i18n");
+      if (k) it.el.innerHTML = pick(k, it.html);
+      k = it.el.getAttribute("data-i18n-alt");
+      if (k) it.el.setAttribute("alt", pick(k, it.alt));
+      k = it.el.getAttribute("data-i18n-aria");
+      if (k) it.el.setAttribute("aria-label", pick(k, it.aria));
+    });
+    copyButtons.forEach(function (b) { b.textContent = UI[lang].copy; });
+    langButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    document.documentElement.lang = lang;
+    document.title = UI[lang].title;
+  }
+
+  function fromHash() {
+    var m = /^#(ru|en)$/i.exec(location.hash || "");
+    return m ? m[1].toLowerCase() : null;
+  }
+
+  function initial() {
+    var h = fromHash();
+    if (h) return h;
+    try { var saved = localStorage.getItem(STORE); if (saved === "ru" || saved === "en") return saved; } catch (e) {}
+    var nav = String((navigator.languages && navigator.languages[0]) || navigator.language || "");
+    return /^(ru|kk|be|ky)\b/i.test(nav) ? "ru" : "en";
+  }
+
+  langButtons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var next = b.getAttribute("data-lang");
+      if (next === lang) return;
+      apply(next);
+      try { localStorage.setItem(STORE, next); } catch (e) {}
+      try { history.replaceState(null, "", "#" + next); } catch (e) {}
+    });
+  });
+  window.addEventListener("hashchange", function () { var h = fromHash(); if (h && h !== lang) apply(h); });
+
   // Copy buttons: clipboard inside the click handler, select the text if that is refused.
-  document.querySelectorAll("button.copy").forEach(function (btn) {
+  copyButtons.forEach(function (btn) {
+    var timer;
     btn.addEventListener("click", function () {
       var el = document.getElementById(btn.dataset.copy);
       var text = el ? el.textContent.trim() : "";
-      function done(label) { btn.textContent = label; setTimeout(function () { btn.textContent = "Copy"; }, 1600); }
+      function done(key) {
+        btn.textContent = UI[lang][key];
+        clearTimeout(timer);
+        timer = setTimeout(function () { btn.textContent = UI[lang].copy; }, 1600);
+      }
       function selectIt() {
         try { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {}
-        done("Selected");
+        done("selected");
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { done("Copied"); }, selectIt);
+        navigator.clipboard.writeText(text).then(function () { done("copied"); }, selectIt);
       } else { selectIt(); }
     });
   });
 
+  apply(initial());
+
   // Play comparison clips while they are on screen; nothing autoplays with reduced motion.
-  (function () {
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var reel = document.getElementById("v-reel");
-    if (reduce && reel) { reel.removeAttribute("autoplay"); reel.pause(); reel.setAttribute("controls", ""); return; }
-    if (!("IntersectionObserver" in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        var v = e.target;
-        if (e.isIntersecting) {
-          if (v.preload === "none") v.preload = "auto";
-          var p = v.play(); if (p && p.catch) p.catch(function () {});
-        } else { v.pause(); }
-      });
-    }, { threshold: 0.35 });
-    document.querySelectorAll("video").forEach(function (v) { io.observe(v); });
-  })();
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reel = document.getElementById("v-reel");
+  if (reduce && reel) { reel.removeAttribute("autoplay"); reel.pause(); reel.setAttribute("controls", ""); return; }
+  if (!("IntersectionObserver" in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) {
+        if (v.preload === "none") v.preload = "auto";
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      } else { v.pause(); }
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll("video").forEach(function (v) { io.observe(v); });
+})();
 </script>
 </body>
 </html>
