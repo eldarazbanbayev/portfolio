@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Prompt engineering portfolio: Steppe Hero, a one-click product video preset built in ComfyUI on OpenRouter models, with three iterations, an error inventory and image and video model tests.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Eldar Azbanbayev · Prompt Engineer portfolio">
+<meta property="og:description" content="Steppe Hero: one phone photo in, a 5-second golden-hour product shot out. Pipeline, error inventory, model tests and the ComfyUI tooling behind it.">
+<meta property="og:image" content="https://eldarazbanbayev.github.io/portfolio/assets/reel_poster.jpg">
+<meta property="og:url" content="https://eldarazbanbayev.github.io/portfolio/">
+<meta name="twitter:card" content="summary_large_image">
+<style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0}[hidden]{display:none!important}</style>
+<title>Eldar Azbanbayev Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Dark-first: graded footage. Light: hazy steppe sky. */
+  :root {
+    color-scheme: dark;
+    --bg: #12110e;
+    --panel: #1b1915;
+    --panel-2: #23201b;
+    --ink: #efe8d9;
+    --muted: #a69e8b;
+    --line: #322e27;
+    --amber: #e2a54f;
+    --amber-ink: #12110e;
+    --sage: #a3b896;
+    --flag: #e08a6b;
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
+    --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+      --bg: #eef0eb;
+      --panel: #f8f9f5;
+      --panel-2: #e4e8df;
+      --ink: #191b17;
+      --muted: #5c6358;
+      --line: #d3d8cc;
+      --amber: #a4621a;
+      --amber-ink: #fbf8f1;
+      --sage: #4c6a49;
+      --flag: #ad4a31;
+      --shadow: 0 1px 2px rgba(25, 27, 23, 0.06);
+    }
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #eef0eb;
+    --panel: #f8f9f5;
+    --panel-2: #e4e8df;
+    --ink: #191b17;
+    --muted: #5c6358;
+    --line: #d3d8cc;
+    --amber: #a4621a;
+    --amber-ink: #fbf8f1;
+    --sage: #4c6a49;
+    --flag: #ad4a31;
+    --shadow: 0 1px 2px rgba(25, 27, 23, 0.06);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 16px/1.62 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1140px; margin: 0 auto; padding-inline: 20px; padding-block: 36px 72px; }
+  a { color: inherit; text-decoration-color: var(--amber); text-underline-offset: 3px; }
+  a:hover { color: var(--amber); }
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 3px; }
+  img, video { display: block; max-width: 100%; }
+  p { margin: 0; max-width: 66ch; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+  .mono { font-family: var(--mono); font-size: 0.86em; }
+  .muted { color: var(--muted); }
+  .eyebrow {
+    font: 500 11.5px/1.3 var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* ---------- masthead ---------- */
+  .mast { display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end; padding-bottom: 28px; }
+  .mast h1 {
+    font: 600 clamp(44px, 8.4vw, 88px)/0.92 var(--display);
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+  .mast .role { margin-top: 14px; font-size: 18px; color: var(--muted); max-width: 44ch; }
+  .mast .role b { color: var(--ink); font-weight: 500; }
+  .contact { display: grid; gap: 8px; justify-items: start; font-size: 14px; }
+  .contact-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .contact-row .k { font: 500 11px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); width: 70px; }
+  .contact-row .v { font: 500 14px/1.3 var(--mono); user-select: all; }
+  .copy {
+    font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); background: transparent; border: 1px solid var(--line);
+    border-radius: 4px; padding: 5px 8px; cursor: pointer;
+  }
+  .copy:hover { color: var(--ink); border-color: var(--muted); }
+
+  /* ---------- hero reel ---------- */
+  .frame { position: relative; }
+  .frame::before, .frame::after {
+    content: ""; position: absolute; width: 22px; height: 22px; pointer-events: none;
+    border-color: var(--amber); border-style: solid;
+  }
+  .frame::before { top: -9px; left: -9px; border-width: 2px 0 0 2px; }
+  .frame::after { bottom: -9px; right: -9px; border-width: 0 2px 2px 0; }
+  .reel video { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; border-radius: 3px; }
+  .slate {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin-top: 22px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel);
+  }
+  .slate div { padding: 10px 14px; border-right: 1px solid var(--line); min-width: 0; }
+  .slate div:last-child { border-right: 0; }
+  .slate dt { font: 500 10.5px/1.2 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .slate dd { margin: 4px 0 0; font: 500 14px/1.35 var(--mono); font-variant-numeric: tabular-nums; }
+  .slate dd.big { color: var(--amber); }
+  .lede { margin-top: 26px; font-size: 19px; line-height: 1.55; max-width: 60ch; }
+  .lede + .lede { margin-top: 12px; font-size: 16px; color: var(--muted); }
+
+  /* ---------- sections ---------- */
+  .block { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px 40px; padding-top: 64px; }
+  .rail { align-self: start; }
+  .rail h2 { font: 600 clamp(28px, 3.3vw, 36px)/1 var(--display); text-transform: uppercase; letter-spacing: 0.01em; margin-top: 8px; overflow-wrap: break-word; }
+  .content { display: grid; gap: 22px; min-width: 0; }
+  .content > p { color: var(--ink); }
+  .note { font-size: 14px; color: var(--muted); }
+  .repo { font-size: 15px; }
+  .repo a { font-size: 14px; }
+
+  /* ---------- pipeline ---------- */
+  .steps { display: grid; grid-template-columns: minmax(0, 0.8fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 14px; align-items: start; }
+  .arrow { font: 500 22px/1 var(--mono); color: var(--amber); padding-top: 70px; }
+  .step { display: grid; gap: 10px; }
+  .step img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 3px; background: var(--panel-2); }
+  .step img.tall { aspect-ratio: 4 / 3; }
+  .step .n { font: 500 11.5px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); }
+  .step h3 { font: 600 17px/1.3 var(--body); }
+  .step p { font-size: 14.5px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font: 500 11.5px/1 var(--mono); padding: 5px 7px; border-radius: 3px;
+    background: var(--panel-2); color: var(--ink); white-space: nowrap;
+  }
+  .chip.accent { background: var(--amber); color: var(--amber-ink); }
+  .callout {
+    display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+    padding: 16px 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
+  }
+  .callout .eyebrow { padding-top: 3px; }
+  .callout p { font-size: 15px; }
+
+  /* ---------- test set ---------- */
+  .inputs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .inputs li { display: grid; gap: 8px; }
+  .inputs img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+  .inputs b { font: 600 14.5px/1.2 var(--body); display: block; }
+  .inputs span { font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- iterations ---------- */
+  .take { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+  .take h3 { font: 600 22px/1 var(--display); text-transform: uppercase; letter-spacing: 0.02em; }
+  .take span { font-size: 14px; color: var(--muted); }
+  .errors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .err {
+    display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px;
+    padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 5px;
+    box-shadow: var(--shadow);
+  }
+  .err .shots { display: grid; gap: 6px; align-content: start; }
+  .err .shots img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+  .err .shots.pair { grid-template-columns: 1fr 1fr; }
+  .err .shots.pair img { aspect-ratio: 3 / 4; }
+  .err .shots small { font: 500 10.5px/1.2 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .err .body { display: grid; gap: 6px; align-content: start; }
+  .err .top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .code { font: 500 12px/1 var(--mono); color: var(--amber); }
+  .err h4 { margin: 0; font: 600 15.5px/1.35 var(--body); }
+  .err p { font-size: 14px; color: var(--muted); }
+  .err p b { color: var(--ink); font-weight: 500; }
+  .status { font: 500 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .status.ok { color: var(--sage); }
+  .status.part { color: var(--amber); }
+  .vid { display: grid; gap: 8px; }
+  .vid video { width: 100%; border-radius: 3px; background: #000; }
+  .vid figcaption { font-size: 13.5px; color: var(--muted); }
+  figure { margin: 0; }
+
+  /* ---------- model choice ---------- */
+  .models { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .model {
+    display: grid; gap: 8px; align-content: start; padding: 10px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 5px;
+  }
+  .model.chosen { border-color: var(--amber); }
+  .model img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 3px; }
+  .model .head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .model .rank { font: 600 24px/1 var(--display); color: var(--amber); }
+  .model .price { font: 500 12.5px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+  .model .name { font: 500 12px/1.35 var(--mono); word-break: break-word; }
+  .model p { font-size: 13.5px; color: var(--muted); }
+  .pair2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .pair2 figure { display: grid; gap: 6px; }
+  .pair2 img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 3px; }
+  .pair2 figcaption { font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- tables ---------- */
+  .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 5px; background: var(--panel); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font: 500 10.5px/1.2 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td .mono { white-space: nowrap; }
+
+  /* ---------- graph ---------- */
+  .graph img { width: 100%; border-radius: 4px; border: 1px solid var(--line); }
+  .shotpair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 16px; align-items: start; }
+  .shotpair img { width: 100%; border-radius: 4px; border: 1px solid var(--line); }
+
+  /* ---------- lists ---------- */
+  .ticks { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .ticks li { display: grid; grid-template-columns: 14px 1fr; gap: 10px; font-size: 15px; }
+  .ticks li::before { content: ""; width: 8px; height: 8px; margin-top: 8px; background: var(--amber); border-radius: 1px; }
+  .ticks li span { max-width: 70ch; }
+  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .fact { padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 5px; }
+  .fact .v { font: 600 34px/1 var(--display); color: var(--amber); font-variant-numeric: tabular-nums; }
+  .fact .k { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+
+  footer.end { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1000px) {
+    .models { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .slate { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .slate div:nth-child(3) { border-right: 0; }
+    .slate div:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 860px) {
+    .block { grid-template-columns: 1fr; padding-top: 52px; }
+    .mast { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .arrow { padding-top: 0; transform: rotate(90deg); justify-self: start; margin-left: 6px; }
+    .errors { grid-template-columns: 1fr; }
+    .inputs { grid-template-columns: 1fr; }
+    .inputs li { grid-template-columns: 140px 1fr; align-items: center; gap: 14px; }
+    .shotpair { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .slate { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .slate div { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .slate div:nth-child(2n) { border-right: 0; }
+    .slate div:nth-child(3) { border-right: 1px solid var(--line); }
+    .slate div:nth-last-child(-n+2) { border-bottom: 0; }
+    .models { grid-template-columns: 1fr; }
+    .err { grid-template-columns: 1fr; }
+    .err .shots img { aspect-ratio: 16 / 9; }
+    .err .shots.pair img { aspect-ratio: 4 / 3; }
+    .pair2 { grid-template-columns: 1fr; }
+    .lede { font-size: 17px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <div>
+      <div class="eyebrow">Portfolio · Prompt Engineer · Higgsfield</div>
+      <h1>Eldar<br>Azbanbayev</h1>
+      <p class="role"><b>Generative AI engineer.</b> I design presets and pipelines that turn one upload into a finished shot, and I measure where they break.</p>
+    </div>
+    <div class="contact" aria-label="Contact">
+      <div class="contact-row"><span class="k">Email</span><span class="v" id="c-email">eldar.imsc@gmail.com</span><button class="copy" type="button" data-copy="c-email" id="copy-email">Copy</button></div>
+      <div class="contact-row"><span class="k">Telegram</span><span class="v" id="c-tg">@oiradle</span><button class="copy" type="button" data-copy="c-tg" id="copy-tg">Copy</button></div>
+      <div class="contact-row"><span class="k">Based</span><span class="v">Astana · on-site in Almaty</span></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="reel-title">
+    <div class="eyebrow" id="reel-title">Case · Steppe Hero, a one-click product preset</div>
+    <div class="frame reel" style="margin-top:14px">
+      <video id="v-reel" src="assets/reel.mp4" poster="assets/reel_poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Steppe Hero results for five test products, the user's photo shown in the corner"></video>
+    </div>
+    <dl class="slate">
+      <div><dt>Input</dt><dd>1 phone photo</dd></div>
+      <div><dt>Output</dt><dd>5 s · 720p · 24 fps</dd></div>
+      <div><dt>Cost</dt><dd class="big">$0.86 / result</dd></div>
+      <div><dt>Time</dt><dd>~3 min</dd></div>
+      <div><dt>Iterations</dt><dd>3 takes · 8 failures</dd></div>
+      <div><dt>Runs on</dt><dd>ComfyUI + OpenRouter</dd></div>
+    </dl>
+    <p class="lede">The user uploads one photo of a product, shot on a phone in a messy room. The preset returns a five-second golden-hour shot of that exact product on a granite boulder in the Kazakh steppe: slow push-in, Stipa grass in the wind, warm backlight.</p>
+    <p class="lede">Shape, colors and label text must survive. Everything else is the preset's job. The reel shows the five test products with each user's photo in the corner.</p>
+  </section>
+
+  <section class="block" aria-labelledby="h-pipe">
+    <div class="rail">
+      <div class="eyebrow">How it works</div>
+      <h2 id="h-pipe">Pipeline</h2>
+    </div>
+    <div class="content">
+      <p>Three models chained in a ComfyUI graph. I picked them from OpenRouter's usage ranking (tokens spent by all users in the week to Sept&nbsp;24, 2026), then kept or replaced each one based on the test set.</p>
+      <div class="steps">
+        <div class="step">
+          <img class="tall" src="assets/pipe_input.jpg" alt="User's phone photo of a porcelain tea bowl on a cluttered table">
+          <div class="n">Step 1 · Read the photo</div>
+          <h3>Prompt enhancer</h3>
+          <div class="chips"><span class="chip">GLM-5.3 Flash</span><span class="chip">#1 text model</span><span class="chip">$0.0005</span></div>
+          <p>Describes the product exactly, quotes only text it can read with certainty, adds a material note for glass, metal or matte surfaces and picks a natural resting position. Then fills the master template.</p>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step">
+          <img src="assets/pipe_start.jpg" alt="Start frame: the tea bowl on a granite boulder in the steppe at golden hour">
+          <div class="n">Step 2 · Build the start frame</div>
+          <h3>Product in the scene, 2K</h3>
+          <div class="chips"><span class="chip">Nano Banana 2</span><span class="chip">#2 image model</span><span class="chip">2752×1536</span><span class="chip">$0.10</span></div>
+          <p>Rebuilds the product on the boulder, with the user's photo as the identity reference. No new text, props or garnish.</p>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="step">
+          <img src="assets/pipe_final.jpg" alt="Last frame of the video: the tea bowl after the camera push-in">
+          <div class="n">Step 3 · Animate</div>
+          <h3>Push-in, 5 seconds</h3>
+          <div class="chips"><span class="chip">Seedance 2.0</span><span class="chip">first frame</span><span class="chip">720p</span><span class="chip">$0.76</span></div>
+          <p>Slow push-in, grass in the wind, sun flare. The product is a rigid object and does not change.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <span class="eyebrow">Why a still first</span>
+        <p>Product identity is locked in a cheap frame before any motion. I checked every $0.10 start frame before paying 7× more for the video, so failed frames never became failed videos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-test">
+    <div class="rail">
+      <div class="eyebrow">Inputs</div>
+      <h2 id="h-test">Test set</h2>
+    </div>
+    <div class="content">
+      <p>Five photos that look like real uploads: flash, clutter, a tilted phone. Each one targets a failure mode that product presets hit in practice.</p>
+      <ul class="inputs">
+        <li><img src="assets/input_perfume.jpg" alt="Perfume bottle on a bathroom shelf"><div><b>Perfume</b><span>clear glass and liquid</span></div></li>
+        <li><img src="assets/input_sneaker.jpg" alt="Running sneaker on a hallway floor"><div><b>Sneaker</b><span>a shoe resting on a rock</span></div></li>
+        <li><img src="assets/input_can.jpg" alt="Energy drink can on a kitchen counter"><div><b>Can</b><span>small print on the label</span></div></li>
+        <li><img src="assets/input_headphones.jpg" alt="Headphones on an office desk"><div><b>Headphones</b><span>thin metal parts</span></div></li>
+        <li><img src="assets/input_kese.jpg" alt="Porcelain tea bowl with a blue ornament on a tablecloth"><div><b>Kese</b><span>ornament on porcelain</span></div></li>
+      </ul>
+      <p class="note">Test photos are generated to look like user uploads. Brands are fictional; real logos that appeared in one background are blurred.</p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-iter">
+    <div class="rail">
+      <div class="eyebrow">Error inventory</div>
+      <h2 id="h-iter">Three takes</h2>
+    </div>
+    <div class="content">
+      <p>Every run was reviewed frame by frame. Each failure got a code, a cause and a fix in the prompts or parameters. Eight failure classes found, seven closed.</p>
+
+      <div class="take"><h3>Take 1</h3><span>v1 prompts · perfume, sneaker, headphones</span></div>
+      <div class="errors">
+        <article class="err">
+          <div class="shots"><img src="assets/e1_feathers.jpg" alt="Bird feathers stuck in the ground next to the perfume bottle"></div>
+          <div class="body">
+            <div class="top"><span class="code">E1</span><span class="status ok">Fixed in v2</span></div>
+            <h4>"Feather grass" drawn as bird feathers</h4>
+            <p><b>Fix:</b> botanical name plus a visual description: "Stipa steppe grass with long silky silver seed awns".</p>
+          </div>
+        </article>
+        <article class="err">
+          <div class="shots"><img src="assets/e2_text.jpg" alt="Garbled lettering on the headphone cup"></div>
+          <div class="body">
+            <div class="top"><span class="code">E2</span><span class="status ok">Fixed in v2</span></div>
+            <h4>Invented label text</h4>
+            <p>The enhancer misread a tiny logo as "soul"; the image model then drew garbled letters. <b>Fix:</b> quote only text read with certainty, otherwise write "a small unreadable logo"; no new text in the frame.</p>
+          </div>
+        </article>
+        <article class="err">
+          <div class="shots"><img src="assets/e3_pose.jpg" alt="Headphones standing upright on their ear cups"></div>
+          <div class="body">
+            <div class="top"><span class="code">E3</span><span class="status ok">Fixed in v2</span></div>
+            <h4>Physically unstable pose</h4>
+            <p>Headphones balanced upright on their cups. <b>Fix:</b> a resting-position rule per object type: shoes on the sole, headphones on their side, bottles and bowls upright.</p>
+          </div>
+        </article>
+        <article class="err">
+          <div class="shots"><img src="assets/e4_small.jpg" alt="Perfume bottle small in the frame"></div>
+          <div class="body">
+            <div class="top"><span class="code">E4</span><span class="status part">Partly fixed</span></div>
+            <h4>Product too small at the start</h4>
+            <p>About 25% of frame height where the brief asked for half. <b>Fix:</b> shot size ("medium close-up, product large") instead of a percentage. Now 30–35%; the push-in ends near 70%.</p>
+          </div>
+        </article>
+        <article class="err">
+          <div class="shots"><img src="assets/before_after_headphones_poster.jpg" alt="Headphones in v1 and v3 side by side"></div>
+          <div class="body">
+            <div class="top"><span class="code">E5</span><span class="status ok">Fixed in v2</span></div>
+            <h4>Thin parts drift during the camera move</h4>
+            <p>The headband changed width and the sliders moved. <b>Fix:</b> "a rigid object that stays unchanged, including thin parts and edges" in the video prompt.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="take"><h3>Take 2</h3><span>v2 prompts · all five products · start frames only</span></div>
+      <div class="errors">
+        <article class="err">
+          <div class="shots pair">
+            <div><img src="assets/e6_text_1k.jpg" alt="Can label at 1K where 250 reads like 2S0"><small>1K</small></div>
+            <div><img src="assets/e6_text_2k.jpg" alt="Can label at 2K, sharp"><small>2K</small></div>
+          </div>
+          <div class="body">
+            <div class="top"><span class="code">E6</span><span class="status ok">Fixed in v3</span></div>
+            <h4>Small print at the edge of legibility</h4>
+            <p>At 1K "250 ml" reads like "2S0 ml". <b>Fix:</b> start frame at 2K for $0.03 more. The print stays legible in the 720p video.</p>
+          </div>
+        </article>
+        <article class="err">
+          <div class="shots pair">
+            <div><img src="assets/e7_sprig.jpg" alt="Herb sprig floating in the tea"><small>v2</small></div>
+            <div><img src="assets/e7_fixed.jpg" alt="Clean tea surface"><small>v3</small></div>
+          </div>
+          <div class="body">
+            <div class="top"><span class="code">E7</span><span class="status ok">Fixed in v3</span></div>
+            <h4>An added garnish</h4>
+            <p>The image model floated a herb sprig in the tea. <b>Fix:</b> no garnish, leaves, props or decorations on the product or its contents.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="take"><h3>Video test</h3><span>same v3 start frames, other video models</span></div>
+      <div class="errors">
+        <article class="err">
+          <div class="shots"><img src="assets/video_models_can_poster.jpg" alt="Three video models side by side on the can"></div>
+          <div class="body">
+            <div class="top"><span class="code">E8</span><span class="status ok">Fixed for Veo</span></div>
+            <h4>Veo 3.1 Lite ignored the push-in</h4>
+            <p>With the shared prompt the camera stayed almost still, and "dust particles" became flying flakes. <b>Fix:</b> a Veo-specific motion prompt, described below.</p>
+          </div>
+        </article>
+        <figure class="vid">
+          <video src="assets/before_after_headphones.mp4" poster="assets/before_after_headphones_poster.jpg" muted loop playsinline preload="none" controls aria-label="Headphones, take 1 against take 3"></video>
+          <figcaption>Headphones, take 1 against take 3: upright pose, garbled text and a drifting band, then a resting pose, the real logo and a rigid band.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-models">
+    <div class="rail">
+      <div class="eyebrow">Model choice</div>
+      <h2 id="h-models">Start frame</h2>
+    </div>
+    <div class="content">
+      <p>The four most used image models on OpenRouter, given the same enhanced prompt and the same reference photo. Popularity alone did not decide it.</p>
+      <div class="models">
+        <div class="model">
+          <img src="assets/m_can_1.jpg" alt="Flash-lite start frame">
+          <div class="head"><span class="rank">#1</span><span class="price">$0.034</span></div>
+          <div class="name">gemini-3.1-flash-lite-image</div>
+          <p>Cheapest, but rejects 2K and redrew the kese ornament as an all-over pattern.</p>
+        </div>
+        <div class="model chosen">
+          <img src="assets/m_can_2.jpg" alt="Nano Banana 2 start frame">
+          <div class="head"><span class="rank">#2</span><span class="price">$0.10 at 2K</span></div>
+          <div class="name">gemini-3.1-flash-image · chosen</div>
+          <p>Keeps the product and follows the lighting brief. Sharp small print at 2K.</p>
+        </div>
+        <div class="model">
+          <img src="assets/m_can_3.jpg" alt="Seedream 4.5 start frame">
+          <div class="head"><span class="rank">#3</span><span class="price">$0.04</span></div>
+          <div class="name">seedream-4.5</div>
+          <p>Sharp text, but drew bird feathers for "feather grass" (E1) and takes 35 s a frame.</p>
+        </div>
+        <div class="model">
+          <img src="assets/m_can_4.jpg" alt="GPT Image 2.5 start frame">
+          <div class="head"><span class="rank">#4</span><span class="price">$0.018</span></div>
+          <div class="name">gpt-image-2.5-sunburst</div>
+          <p>Sharpest print and cheapest. Drifted to an orange sunset and added condensation drops.</p>
+        </div>
+      </div>
+      <div class="pair2">
+        <figure><img src="assets/m_kese_1.jpg" alt="Kese by flash-lite with the ornament covering the whole bowl"><figcaption>#1 flash-lite: the rim band became an ornament over the whole bowl.</figcaption></figure>
+        <figure><img src="assets/m_kese_2.jpg" alt="Kese by Nano Banana 2 with the rim band as in the photo"><figcaption>#2 Nano Banana 2: the band stays at the rim, as in the user's photo.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-video">
+    <div class="rail">
+      <div class="eyebrow">Model choice</div>
+      <h2 id="h-video">Video</h2>
+    </div>
+    <div class="content">
+      <p>OpenRouter publishes no ranking for video models, so I ran the same start frames through three candidates.</p>
+      <figure class="vid">
+        <video src="assets/video_models_can.mp4" poster="assets/video_models_can_poster.jpg" muted loop playsinline preload="none" controls aria-label="Seedance 2.0 against Veo 3.1 Lite with two prompts"></video>
+        <figcaption>Left to right: Seedance 2.0; Veo 3.1 Lite with the shared prompt, where the camera barely moves; Veo 3.1 Lite with its own dolly prompt.</figcaption>
+      </figure>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Model</th><th>Output</th><th>Cost per clip</th><th>Render</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">Seedance 2.0</span></td><td class="num">720p · 5 s</td><td class="num">$0.76</td><td class="num">150–180 s</td><td>Strongest push-in, product from ~30% to ~70% of the frame. Used for the reel.</td></tr>
+            <tr><td><span class="mono">Seedance 2.5</span></td><td class="num">720p max</td><td class="num">$1.16</td><td class="num">249 s</td><td>No visible gain over 2.0 on the headphones for 1.5× the price. One test.</td></tr>
+            <tr><td><span class="mono">Veo 3.1 Lite</span></td><td class="num">1080p · 6 s</td><td class="num">$0.30</td><td class="num">100–115 s</td><td>Shared prompt: nearly static camera. Own dolly prompt: push-in works, shallower (~35% to ~50%), sharper labels.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="eyebrow">Takeaway</span>
+        <p>Each video model has its own motion vocabulary, so the preset keeps one motion prompt per model. The next version ships two tiers: Veo 3.1 Lite at 1080p by default for about $0.40 a result, and Seedance 2.0 when the camera move matters most.</p>
+      </div>
+      <figure class="vid">
+        <video src="assets/video_models_headphones.mp4" poster="assets/video_models_headphones_poster.jpg" muted loop playsinline preload="none" controls aria-label="Headphones on Seedance 2.0, Seedance 2.5 and Veo 3.1 Lite"></video>
+        <figcaption>Headphones on Seedance 2.0, Seedance 2.5 and Veo 3.1 Lite with the shared prompt.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-graph">
+    <div class="rail">
+      <div class="eyebrow">Build</div>
+      <h2 id="h-graph">The graph</h2>
+    </div>
+    <div class="content">
+      <figure class="graph">
+        <img src="assets/graph.jpg" alt="ComfyUI graph: product photo, prompt enhancer, start frame, video and saved results">
+      </figure>
+      <div class="shotpair">
+        <p>The preset as a ComfyUI graph on my own OpenRouter nodes. The model dropdowns list models by real usage and show each model's OpenRouter price plus the actual cost of its last run here, so choosing a model is a cost decision made in the graph itself.</p>
+        <img src="assets/dropdown.jpg" alt="Model dropdown listing image models with rank, price per million tokens and last run cost">
+      </div>
+      <div class="facts">
+        <div class="fact"><div class="v">$0.86</div><div class="k">per result with Seedance 2.0; about $0.40 with Veo 3.1 Lite</div></div>
+        <div class="fact"><div class="v">~$11.6</div><div class="k">total R&amp;D on OpenRouter, every failed and comparison run included</div></div>
+        <div class="fact"><div class="v">7 / 8</div><div class="k">failure classes closed across three takes</div></div>
+      </div>
+      <ul class="ticks">
+        <li><span><b>Next:</b> a reframe step or a vision-model size check to close E4 before the video is paid for.</span></li>
+        <li><span><b>Next:</b> automatic QA. A vision model compares the start frame with the user's photo (text, shape, color, added objects) and retries. It would have caught E2, E6 and E7 without a person looking at every frame.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-tool">
+    <div class="rail">
+      <div class="eyebrow">Tooling · OpenRouter</div>
+      <h2 id="h-tool">ComfyUI nodes</h2>
+    </div>
+    <div class="content">
+      <p>ComfyUI's built-in OpenRouter node goes through Comfy's billing proxy and offers two image models and no video. I wrote three nodes that use your own key: <span class="mono">Image</span> (55 models), <span class="mono">Video</span> (25) and <span class="mono">LLM</span> (441).</p>
+      <p class="repo">Source, MIT: <a href="https://github.com/eldarazbanbayev/comfyui-openrouter" class="mono">github.com/eldarazbanbayev/comfyui-openrouter</a></p>
+      <ul class="ticks">
+        <li><span>Model lists sorted by OpenRouter's rankings dataset, with price labels, the real cost of the last run and a tooltip with the full price table and supported durations and resolutions.</span></li>
+        <li><span>Model-aware requests: output modalities per model, a fallback to <span class="mono">POST /images</span> for GPT Image 2.5, video durations snapped to supported values, and unsupported resolutions or last frames rejected before a paid job starts.</span></li>
+        <li><span>Found while building this case: uncapped <span class="mono">max_tokens</span> reserved credit for 58K tokens per image; a 2K PNG start frame took 45 s to upload until frames went as JPEG; video jobs cut off by an app restart are recovered by job id instead of being paid twice.</span></li>
+        <li><span>The API key is read from a file and never saved into workflow JSON that gets shared.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-prod">
+    <div class="rail">
+      <div class="eyebrow">Production</div>
+      <h2 id="h-prod">Falcon OS agents</h2>
+    </div>
+    <div class="content">
+      <p>At Digital Arts I build Falcon OS, a multi-agent platform. Every generative capability is a container with a typed manifest (prompt, negative prompt, reference media, model, seed) and an asynchronous submit, poll and download cycle.</p>
+      <p>Generative agents I built there: Higgsfield image and video, Nano Banana image editing, Envato Gen AI for images, video, voice, music and sound effects, ElevenLabs voice and speech-to-text. A manifest is the same idea as a preset: simple typed inputs outside, a fixed recipe inside.</p>
+    </div>
+  </section>
+
+  <footer class="end">
+    <span>Eldar Azbanbayev · eldar.imsc@gmail.com · Telegram @oiradle · <a href="https://github.com/eldarazbanbayev">github.com/eldarazbanbayev</a></span>
+    <span>Built September 2026 with ComfyUI and OpenRouter</span>
+  </footer>
+</div>
+
+<script>
+  // Copy buttons: clipboard inside the click handler, select the text if that is refused.
+  document.querySelectorAll("button.copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var el = document.getElementById(btn.dataset.copy);
+      var text = el ? el.textContent.trim() : "";
+      function done(label) { btn.textContent = label; setTimeout(function () { btn.textContent = "Copy"; }, 1600); }
+      function selectIt() {
+        try { var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {}
+        done("Selected");
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done("Copied"); }, selectIt);
+      } else { selectIt(); }
+    });
+  });
+
+  // Play comparison clips while they are on screen; nothing autoplays with reduced motion.
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var reel = document.getElementById("v-reel");
+    if (reduce && reel) { reel.removeAttribute("autoplay"); reel.pause(); reel.setAttribute("controls", ""); return; }
+    if (!("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) {
+          if (v.preload === "none") v.preload = "auto";
+          var p = v.play(); if (p && p.catch) p.catch(function () {});
+        } else { v.pause(); }
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll("video").forEach(function (v) { io.observe(v); });
+  })();
+</script>
+</body>
+</html>
